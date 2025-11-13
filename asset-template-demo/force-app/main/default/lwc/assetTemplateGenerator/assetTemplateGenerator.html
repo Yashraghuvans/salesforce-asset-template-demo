@@ -1,0 +1,114 @@
+<template>
+    <lightning-card title="Asset Template Generator" icon-name="standard:asset_object">
+        <div class="slds-card__body slds-card__body_inner">
+            
+            <!-- Spinner overlay -->
+            <template if:true={isGenerating}>
+                <lightning-spinner alternative-text="Generating assets..." size="medium"></lightning-spinner>
+            </template>
+
+            <!-- Input Form Section -->
+            <div class="slds-form slds-form_stacked slds-m-bottom_medium">
+                
+                <!-- Template Selection -->
+                <lightning-combobox
+                    name="template"
+                    label="Asset Template"
+                    value={selectedTemplateId}
+                    placeholder="Select a template"
+                    options={templateOptions}
+                    onchange={handleTemplateChange}
+                    required
+                    class="slds-m-bottom_small">
+                </lightning-combobox>
+
+                <!-- Quantity Input -->
+                <lightning-input
+                    type="number"
+                    name="quantity"
+                    label="Quantity"
+                    value={quantity}
+                    min="1"
+                    max="100"
+                    placeholder="Enter quantity (1-100)"
+                    onchange={handleQuantityChange}
+                    required
+                    class="slds-m-bottom_small">
+                </lightning-input>
+
+                <!-- Site Prefix Input -->
+                <lightning-input
+                    type="text"
+                    name="sitePrefix"
+                    label="Site Prefix"
+                    value={sitePrefix}
+                    placeholder="e.g., SITE-A"
+                    onchange={handleSitePrefixChange}
+                    required
+                    class="slds-m-bottom_small">
+                </lightning-input>
+
+                <!-- Starting Number Input -->
+                <lightning-input
+                    type="number"
+                    name="startNumber"
+                    label="Starting Number"
+                    value={startNumber}
+                    min="0"
+                    placeholder="Enter starting number"
+                    onchange={handleStartNumberChange}
+                    required
+                    class="slds-m-bottom_small">
+                </lightning-input>
+
+            </div>
+
+            <!-- Preview Section -->
+            <template if:true={showPreview}>
+                <div class="slds-box slds-theme_shade slds-m-bottom_medium">
+                    <h3 class="slds-text-heading_small slds-m-bottom_small">Preview (First 5 Assets)</h3>
+                    <ul class="slds-list_dotted">
+                        <template for:each={previewNames} for:item="name">
+                            <li key={name} class="slds-p-vertical_xx-small">
+                                <span class="slds-text-body_regular">{name}</span>
+                            </li>
+                        </template>
+                    </ul>
+                    <template if:true={hasMoreAssets}>
+                        <p class="slds-text-color_weak slds-m-top_x-small">
+                            ... and {remainingCount} more
+                        </p>
+                    </template>
+                </div>
+            </template>
+
+            <!-- Action Buttons -->
+            <div class="slds-grid slds-grid_align-end slds-gutters">
+                <div class="slds-col">
+                    <lightning-button
+                        label="Cancel"
+                        onclick={handleCancel}
+                        class="slds-m-right_x-small">
+                    </lightning-button>
+                    <lightning-button
+                        variant="brand"
+                        label="Generate Assets"
+                        onclick={handleGenerate}
+                        disabled={isGenerateDisabled}>
+                    </lightning-button>
+                </div>
+            </div>
+
+            <!-- Success Message -->
+            <template if:true={successMessage}>
+                <div class="slds-m-top_medium">
+                    <div class="slds-notify slds-notify_alert slds-alert_success" role="alert">
+                        <span class="slds-assistive-text">Success</span>
+                        <h2>{successMessage}</h2>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>
