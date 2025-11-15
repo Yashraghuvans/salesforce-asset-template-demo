@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Version_Status__c</fullName>
     <description>Status of the asset version</description>
-    <externalId>false</externalId>
     <inlineHelpText>Select the version status</inlineHelpText>
     <label>Version Status</label>
     <required>false</required>
@@ -26,6 +25,18 @@
                 <fullName>Superseded</fullName>
                 <default>false</default>
                 <label>Superseded</label>
+            </value>
+            <value>
+                <fullName>Archived</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Archived</label>
+            </value>
+            <value>
+                <fullName>Draft</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Draft</label>
             </value>
         </valueSetDefinition>
     </valueSet>

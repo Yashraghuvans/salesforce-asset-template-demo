@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Maint_Interval_Req_Equipment</fullName>
+    <active>true</active>
+    <description>Requires Maintenance Interval for Hardware and Network Equipment categories</description>
+    <errorConditionFormula>AND(
+    OR(
+        ISPICKVAL(Asset_Category__c, &quot;Hardware&quot;),
+        ISPICKVAL(Asset_Category__c, &quot;Network Equipment&quot;)
+    ),
+    ISPICKVAL(Lifecycle_Stage__c, &quot;Active&quot;),
+    ISBLANK(Maintenance_Interval_Days__c)
+)</errorConditionFormula>
+    <errorDisplayField>Maintenance_Interval_Days__c</errorDisplayField>
+    <errorMessage>Maintenance Interval is required for active Hardware and Network Equipment assets.</errorMessage>
+</ValidationRule>

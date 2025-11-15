@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Assets_Without_Maintenance_Schedule</fullName>
+    <columns>ASSET.NAME</columns>
+    <columns>ASSET.SERIAL_NUMBER</columns>
+    <columns>ASSET.INSTALL_DATE</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>CONTACT.NAME</columns>
+    <columns>PRODUCT2.NAME</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>Maintenance_Interval_Days__c</field>
+        <operation>equals</operation>
+    </filters>
+    <label>Assets Without Maintenance Schedule</label>
+</ListView>

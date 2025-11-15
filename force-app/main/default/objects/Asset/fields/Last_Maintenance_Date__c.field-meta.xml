@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Last_Maintenance_Date__c</fullName>
     <description>Date when the asset was last maintained</description>
-    <externalId>false</externalId>
     <inlineHelpText>Enter the date when maintenance was last performed on this asset</inlineHelpText>
     <label>Last Maintenance Date</label>
     <required>false</required>

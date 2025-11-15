@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Criticality__c</fullName>
     <description>Business criticality level of the asset</description>
-    <externalId>false</externalId>
     <inlineHelpText>Select the criticality level for business operations</inlineHelpText>
     <label>Criticality</label>
     <required>false</required>

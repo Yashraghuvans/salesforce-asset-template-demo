@@ -3,7 +3,6 @@
     <fullName>Site__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Site location where asset is installed</description>
-    <externalId>false</externalId>
     <inlineHelpText>Select the site location</inlineHelpText>
     <label>Site</label>
     <referenceTo>Location</referenceTo>

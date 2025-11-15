@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>High_Value_Assets_Needing_GL_Code</fullName>
+    <booleanFilter>1 AND 2</booleanFilter>
+    <columns>ASSET.NAME</columns>
+    <columns>ASSET.SERIAL_NUMBER</columns>
+    <columns>ASSET.INSTALL_DATE</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>CONTACT.NAME</columns>
+    <columns>PRODUCT2.NAME</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>Purchase_Cost__c</field>
+        <operation>greaterThan</operation>
+        <value>10000</value>
+    </filters>
+    <filters>
+        <field>GL_Account__c</field>
+        <operation>notEqual</operation>
+    </filters>
+    <label>High Value Assets Needing GL Code</label>
+</ListView>

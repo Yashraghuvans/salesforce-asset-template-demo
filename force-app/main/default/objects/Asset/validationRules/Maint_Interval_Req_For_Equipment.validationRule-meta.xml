@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Maint_Interval_Req_For_Equipment</fullName>
+    <active>true</active>
+    <description>Requires Maintenance Interval when Next Maintenance Due is set</description>
+    <errorConditionFormula>AND(NOT(ISBLANK(Next_Maintenance_Due__c)), ISBLANK(Maintenance_Interval_Days__c))</errorConditionFormula>
+    <errorDisplayField>Maintenance_Interval_Days__c</errorDisplayField>
+    <errorMessage>Maintenance Interval is required when Next Maintenance Due date is set.</errorMessage>
+</ValidationRule>

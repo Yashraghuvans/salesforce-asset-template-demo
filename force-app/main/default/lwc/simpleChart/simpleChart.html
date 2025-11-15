@@ -1,0 +1,102 @@
+<template>
+    <div class="chart-container">
+        <!-- Donut Chart -->
+        <template if:true={isDonut}>
+            <div class="slds-text-align_center slds-p-around_medium">
+                <template for:each={chartItems} for:item="item">
+                    <div key={item.label} class="slds-m-bottom_small chart-legend-item" data-label={item.label} onclick={handleChartClick}>
+                        <span class="color-box" style={item.colorStyle}></span>
+                        <span class="slds-m-left_x-small">{item.label}: <strong>{item.value}</strong> ({item.percentage}%)</span>
+                    </div>
+                </template>
+            </div>
+        </template>
+        
+        <!-- Pie Chart -->
+        <template if:true={isPie}>
+            <div class="pie-chart-container slds-p-around_medium">
+                <div class="pie-chart-visual">
+                    <svg viewBox="0 0 200 200" class="pie-svg">
+                        <template for:each={pieSegments} for:item="segment">
+                            <path key={segment.label} d={segment.path} fill={segment.color} class="pie-segment" data-label={segment.label} onclick={handleChartClick}></path>
+                        </template>
+                    </svg>
+                </div>
+                <div class="pie-legend slds-m-top_medium">
+                    <template for:each={chartItems} for:item="item">
+                        <div key={item.label} class="slds-m-bottom_small chart-legend-item" data-label={item.label} onclick={handleChartClick}>
+                            <span class="color-box" style={item.colorStyle}></span>
+                            <span class="slds-m-left_x-small">{item.label}: <strong>{item.value}</strong> ({item.percentage}%)</span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+        
+        <!-- Vertical Bar Chart -->
+        <template if:true={isBar}>
+            <div class="bar-chart slds-p-around_medium">
+                <template for:each={chartItems} for:item="item">
+                    <div key={item.label} class="bar-row slds-m-bottom_small clickable-bar" data-label={item.label} onclick={handleChartClick}>
+                        <div class="bar-label">{item.label}</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style={item.barStyle}></div>
+                            <span class="bar-value">{item.displayValue}</span>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+        
+        <!-- Horizontal Stacked Bar Chart -->
+        <template if:true={isHorizontalBar}>
+            <div class="stacked-bar-chart slds-p-around_medium">
+                <template for:each={stackedChartData} for:item="row">
+                    <div key={row.label} class="stacked-bar-row slds-m-bottom_medium">
+                        <div class="stacked-bar-label slds-text-body_small slds-m-bottom_xx-small">{row.label}</div>
+                        <div class="stacked-bar-container">
+                            <template for:each={row.segments} for:item="segment">
+                                <div key={segment.label} class="stacked-segment" style={segment.style}></div>
+                            </template>
+                        </div>
+                        <div class="stacked-bar-legend slds-m-top_xx-small">
+                            <template for:each={row.segments} for:item="segment">
+                                <span key={segment.label} class="legend-item slds-m-right_small">
+                                    <span class="legend-color" style={segment.color}></span>
+                                    <span class="slds-text-body_small">{segment.label}: {segment.value}</span>
+                                </span>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+        
+        <!-- Funnel Chart -->
+        <template if:true={isFunnel}>
+            <div class="funnel-chart slds-p-around_medium">
+                <template for:each={funnelItems} for:item="item">
+                    <div key={item.label} class="funnel-row slds-m-bottom_small">
+                        <div class="funnel-bar" style={item.style}>
+                            <span class="funnel-label">{item.label}: {item.displayValue}</span>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+        
+        <!-- Gauge Chart -->
+        <template if:true={isGauge}>
+            <div class="gauge-chart slds-text-align_center slds-p-around_medium">
+                <div class="gauge-container">
+                    <div class="gauge-circle" style={gaugeStyle}>
+                        <div class="gauge-inner">
+                            <div class="gauge-value">{gaugeValue}%</div>
+                            <div class="gauge-label">Live Assets</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

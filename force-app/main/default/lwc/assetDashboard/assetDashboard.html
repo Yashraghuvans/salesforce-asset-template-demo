@@ -1,0 +1,233 @@
+<template>
+    <lightning-card title="Asset Management Dashboard" icon-name="custom:custom63">
+        <div slot="actions">
+            <lightning-button-icon 
+                icon-name="utility:refresh" 
+                alternative-text="Refresh" 
+                onclick={handleRefresh}
+                title="Refresh Dashboard">
+            </lightning-button-icon>
+        </div>
+        
+        <div class="slds-p-around_medium">
+            <!-- Loading Spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading dashboard..." size="medium"></lightning-spinner>
+            </template>
+            
+            <!-- Key Metrics Cards -->
+            <template if:false={isLoading}>
+                <div class="slds-grid slds-gutters slds-wrap slds-m-bottom_large">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-5">
+                        <a onclick={navigateToAllAssets} class="metric-card-link">
+                            <div class="metric-card slds-box slds-theme_default clickable">
+                                <div class="metric-icon slds-text-align_center">
+                                    <lightning-icon icon-name="standard:asset_object" size="small"></lightning-icon>
+                                </div>
+                                <div class="metric-value slds-text-align_center">{metrics.totalAssets}</div>
+                                <div class="metric-label slds-text-align_center">Total Assets</div>
+                                <div class="metric-subtitle slds-text-align_center">Click to view all</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-5">
+                        <a onclick={navigateToActiveAssets} class="metric-card-link">
+                            <div class="metric-card slds-box slds-theme_success clickable">
+                                <div class="metric-icon slds-text-align_center">
+                                    <lightning-icon icon-name="utility:check" size="small" variant="inverse"></lightning-icon>
+                                </div>
+                                <div class="metric-value slds-text-align_center">{metrics.activeAssets}</div>
+                                <div class="metric-label slds-text-align_center">Active Assets</div>
+                                <div class="metric-subtitle slds-text-align_center">{activePercentage}% of total</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-5">
+                        <a onclick={navigateToOverdueAssets} class="metric-card-link">
+                            <div class="metric-card slds-box slds-theme_error clickable">
+                                <div class="metric-icon slds-text-align_center">
+                                    <lightning-icon icon-name="utility:warning" size="small" variant="inverse"></lightning-icon>
+                                </div>
+                                <div class="metric-value slds-text-align_center">{metrics.overdueAssets}</div>
+                                <div class="metric-label slds-text-align_center">Overdue Maintenance</div>
+                                <div class="metric-subtitle slds-text-align_center">Requires immediate action</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-5">
+                        <a onclick={navigateToCriticalAssets} class="metric-card-link">
+                            <div class="metric-card slds-box slds-theme_warning clickable">
+                                <div class="metric-icon slds-text-align_center">
+                                    <lightning-icon icon-name="utility:priority" size="small"></lightning-icon>
+                                </div>
+                                <div class="metric-value slds-text-align_center">{metrics.criticalAssets}</div>
+                                <div class="metric-label slds-text-align_center">Critical Assets</div>
+                                <div class="metric-subtitle slds-text-align_center">High priority items</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-5">
+                        <div class="metric-card slds-box slds-theme_info">
+                            <div class="metric-icon slds-text-align_center">
+                                <lightning-icon icon-name="utility:moneybag" size="small" variant="inverse"></lightning-icon>
+                            </div>
+                            <div class="metric-value slds-text-align_center">{formattedTotalValue}</div>
+                            <div class="metric-label slds-text-align_center">Total Value</div>
+                            <div class="metric-subtitle slds-text-align_center">Asset portfolio value</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Charts Grid -->
+                <div class="slds-grid slds-gutters slds-wrap">
+                    <!-- Component 4: Maintenance Status by Site (Horizontal Stacked Bar) -->
+                    <div class="slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                        <lightning-card title="Maintenance Status by Site">
+                            <template if:true={maintenanceBySiteConfig}>
+                                <div class="chart-wrapper chart-large">
+                                    <c-simple-chart 
+                                        chart-type="horizontalBar"
+                                        chart-data={maintenanceBySiteConfig}>
+                                    </c-simple-chart>
+                                </div>
+                            </template>
+                        </lightning-card>
+                    </div>
+                    
+                    <!-- Component 5: Assets by Criticality (Pie Chart) -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium">
+                        <lightning-card title="Assets by Criticality">
+                            <template if:true={criticalityChartConfig}>
+                                <div class="chart-wrapper">
+                                    <c-simple-chart 
+                                        chart-type="pie"
+                                        chart-data={criticalityChartConfig}>
+                                    </c-simple-chart>
+                                </div>
+                            </template>
+                        </lightning-card>
+                    </div>
+                    
+                    <!-- Component 6: Assets by Condition (Funnel) -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium">
+                        <lightning-card title="Assets by Condition">
+                            <template if:true={conditionChartConfig}>
+                                <div class="chart-wrapper">
+                                    <c-simple-chart 
+                                        chart-type="funnel"
+                                        chart-data={conditionChartConfig}>
+                                    </c-simple-chart>
+                                </div>
+                            </template>
+                        </lightning-card>
+                    </div>
+                    
+                    <!-- Component 7: Version Status (Gauge) -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium">
+                        <lightning-card title="Version Status">
+                            <template if:true={versionChartConfig}>
+                                <div class="chart-wrapper">
+                                    <c-simple-chart 
+                                        chart-type="gauge"
+                                        chart-data={versionChartConfig}>
+                                    </c-simple-chart>
+                                </div>
+                            </template>
+                        </lightning-card>
+                    </div>
+                    
+                    <!-- Maintenance Status Overview -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-m-bottom_medium">
+                        <lightning-card title="Maintenance Status Overview">
+                            <template if:true={maintenanceChartConfig}>
+                                <div class="chart-wrapper">
+                                    <c-simple-chart 
+                                        chart-type="bar"
+                                        chart-data={maintenanceChartConfig}>
+                                    </c-simple-chart>
+                                </div>
+                            </template>
+                        </lightning-card>
+                    </div>
+                    
+                    <!-- Component 8: Top 10 Expensive Assets (Table) -->
+                    <div class="slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                        <lightning-card title="Top 10 Expensive Assets" icon-name="standard:currency">
+                            <div slot="actions">
+                                <lightning-button 
+                                    label="View All" 
+                                    onclick={navigateToAllAssets}
+                                    variant="neutral">
+                                </lightning-button>
+                            </div>
+                            <div class="slds-p-around_medium">
+                                <template if:true={hasExpensiveAssets}>
+                                    <lightning-datatable
+                                        key-field="id"
+                                        data={expensiveAssets}
+                                        columns={expensiveColumns}
+                                        hide-checkbox-column
+                                        onrowaction={handleRowAction}>
+                                    </lightning-datatable>
+                                </template>
+                                <template if:false={hasExpensiveAssets}>
+                                    <div class="slds-text-align_center slds-p-around_medium">
+                                        <p class="slds-text-color_weak">No asset data available</p>
+                                    </div>
+                                </template>
+                            </div>
+                        </lightning-card>
+                    </div>
+                    
+                    <!-- Component 9: Assets Needing Maintenance Schedule (Table) -->
+                    <div class="slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                        <lightning-card title="Assets Needing Maintenance Schedule" icon-name="standard:maintenance_plan">
+                            <div slot="actions">
+                                <lightning-button 
+                                    label="Schedule Maintenance" 
+                                    onclick={handleScheduleMaintenance}
+                                    variant="brand">
+                                </lightning-button>
+                            </div>
+                            <div class="slds-p-around_medium">
+                                <template if:true={hasMaintenanceAssets}>
+                                    <lightning-datatable
+                                        key-field="id"
+                                        data={maintenanceAssets}
+                                        columns={maintenanceColumns}
+                                        hide-checkbox-column
+                                        onrowaction={handleRowAction}>
+                                    </lightning-datatable>
+                                </template>
+                                <template if:false={hasMaintenanceAssets}>
+                                    <div class="slds-text-align_center slds-p-around_medium">
+                                        <lightning-icon icon-name="utility:success" size="large"></lightning-icon>
+                                        <p class="slds-m-top_small">All assets are up to date with maintenance!</p>
+                                    </div>
+                                </template>
+                            </div>
+                        </lightning-card>
+                    </div>
+                    
+                    <!-- Component 10: Asset Value by Site (Stacked Bars) -->
+                    <div class="slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                        <lightning-card title="Asset Value by Site">
+                            <template if:true={siteValueChartConfig}>
+                                <div class="chart-wrapper">
+                                    <c-simple-chart 
+                                        chart-type="bar"
+                                        chart-data={siteValueChartConfig}>
+                                    </c-simple-chart>
+                                </div>
+                            </template>
+                        </lightning-card>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

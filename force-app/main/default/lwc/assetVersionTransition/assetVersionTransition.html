@@ -1,0 +1,143 @@
+<template>
+    <lightning-modal-header label="Manage Asset Version"></lightning-modal-header>
+    
+    <lightning-modal-body>
+        <div class="slds-p-around_medium">
+            <lightning-spinner if:true={isLoading} alternative-text="Loading..." size="medium"></lightning-spinner>
+            
+            <!-- Screen 1: Choose Transition Type -->
+            <template if:true={isScreen1}>
+                <p class="slds-m-bottom_medium">You are about to transition this asset. Please review carefully.</p>
+                
+                <lightning-record-view-form record-id={recordId} object-api-name="Asset">
+                    <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning-output-field field-name="Name"></lightning-output-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning-output-field field-name="Version__c"></lightning-output-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning-output-field field-name="Version_Status__c"></lightning-output-field>
+                        </div>
+                    </div>
+                </lightning-record-view-form>
+                
+                <hr class="slds-m-vertical_medium"/>
+                
+                <lightning-radio-group
+                    name="transitionType"
+                    label="Choose Transition Type"
+                    options={transitionOptions}
+                    value={transitionType}
+                    type="radio"
+                    onchange={handleTypeChange}
+                    required>
+                </lightning-radio-group>
+            </template>
+            
+            <!-- Screen 2: Create Planned Version Details -->
+            <template if:true={isScreen2}>
+                <p class="slds-text-heading_small slds-m-bottom_small">Create New Planned Version</p>
+                
+                <lightning-input 
+                    label="New Version Number" 
+                    name="newVersion"
+                    value={form.newVersion}
+                    onchange={handleFormChange}
+                    required
+                    pattern="V\d+\.\d+"
+                    message-when-pattern-mismatch="Format must be V1.0, V2.0, etc."
+                    class="slds-m-bottom_small">
+                </lightning-input>
+                
+                <lightning-textarea 
+                    label="Version Notes"
+                    name="versionNotes"
+                    value={form.versionNotes}
+                    onchange={handleFormChange}
+                    class="slds-m-bottom_small">
+                </lightning-textarea>
+                
+                <lightning-input 
+                    type="date"
+                    label="Expected Go-Live Date"
+                    name="goLiveDate"
+                    value={form.goLiveDate}
+                    onchange={handleFormChange}
+                    class="slds-m-bottom_small">
+                </lightning-input>
+                
+                <lightning-record-picker
+                    label="Assigned Engineer"
+                    name="assignedEngineerId"
+                    value={form.assignedEngineerId}
+                    onchange={handleFormChange}
+                    placeholder="Search Users..."
+                    object-api-name="User">
+                </lightning-record-picker>
+            </template>
+            
+            <!-- Screen 3: Confirmation -->
+            <template if:true={isScreen3}>
+                <p class="slds-text-heading_small slds-m-bottom_small">Confirmation</p>
+                <p class="slds-m-bottom_small">You are about to perform the following action:</p>
+                <p class="slds-text-heading_medium slds-m-vertical_small">{selectedOption.label}</p>
+                
+                <template if:true={isActivating}>
+                    <div class="slds-box slds-theme_warning slds-m-bottom_small">
+                        <p><strong>⚠️ WARNING</strong></p>
+                        <p>This will make the current Live version <strong>Superseded</strong>. This action cannot be undone.</p>
+                    </div>
+                </template>
+                
+                <template if:true={isSuperseding}>
+                    <div class="slds-box slds-theme_error slds-m-bottom_small">
+                        <p><strong>⚠️ WARNING</strong></p>
+                        <p>This will mark the asset as <strong>Superseded</strong> without creating a replacement. This action cannot be undone.</p>
+                    </div>
+                </template>
+                
+                <lightning-input
+                    type="checkbox"
+                    label="I understand and want to proceed with this action."
+                    name="confirmCheck"
+                    onchange={handleConfirmCheck}
+                    checked={isConfirmed}>
+                </lightning-input>
+            </template>
+        </div>
+    </lightning-modal-body>
+    
+    <lightning-modal-footer>
+        <lightning-button label="Cancel" onclick={closeModal}></lightning-button>
+        
+        <template if:true={isScreen1}>
+            <lightning-button 
+                label="Next" 
+                variant="brand" 
+                onclick={handleNext}
+                disabled={isNextDisabled}>
+            </lightning-button>
+        </template>
+        
+        <template if:true={isScreen2}>
+            <lightning-button label="Back" onclick={handleBack}></lightning-button>
+            <lightning-button 
+                label="Confirm Details" 
+                variant="brand" 
+                onclick={handleConfirmDetails}>
+            </lightning-button>
+        </template>
+        
+        <template if:true={isScreen3}>
+            <lightning-button label="Back" onclick={handleBack}></lightning-button>
+            <lightning-button 
+                label="Confirm Transition" 
+                variant="brand" 
+                onclick={handleFinish}
+                disabled={isConfirmDisabled}></lightning-button>
+            </lightning-button>
+        </template>
+    </lightning-modal-footer>
+</template>

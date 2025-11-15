@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Depreciation_Method__c</fullName>
+    <description>Method used to calculate asset depreciation</description>
+    <inlineHelpText>Select the depreciation method applied to this asset</inlineHelpText>
+    <label>Depreciation Method</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Straight Line</fullName>
+                <default>true</default>
+                <label>Straight Line</label>
+            </value>
+            <value>
+                <fullName>Declining Balance</fullName>
+                <default>false</default>
+                <label>Declining Balance</label>
+            </value>
+            <value>
+                <fullName>Double Declining Balance</fullName>
+                <default>false</default>
+                <label>Double Declining Balance</label>
+            </value>
+            <value>
+                <fullName>Sum of Years Digits</fullName>
+                <default>false</default>
+                <label>Sum of Years Digits</label>
+            </value>
+            <value>
+                <fullName>Units of Production</fullName>
+                <default>false</default>
+                <label>Units of Production</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

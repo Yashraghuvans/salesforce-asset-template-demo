@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Version_Number__c</fullName>
-    <description>Version number of the asset</description>
+    <description>Version number for tracking asset configuration changes</description>
     <externalId>false</externalId>
-    <inlineHelpText>Enter the version number for this asset</inlineHelpText>
+    <inlineHelpText>Enter the version number (e.g., 1.0, 2.5)</inlineHelpText>
     <label>Version Number</label>
-    <length>50</length>
+    <length>20</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <type>Text</type>

@@ -3,7 +3,6 @@
     <fullName>Parent_Asset__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Parent asset in hierarchy</description>
-    <externalId>false</externalId>
     <inlineHelpText>Select the parent asset if this is a sub-component</inlineHelpText>
     <label>Parent Asset</label>
     <referenceTo>Asset</referenceTo>

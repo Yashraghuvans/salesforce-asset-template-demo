@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Assets_by_Version_Status</fullName>
+    <columns>ASSET.NAME</columns>
+    <columns>ASSET.SERIAL_NUMBER</columns>
+    <columns>Version__c</columns>
+    <columns>Version_Status__c</columns>
+    <columns>Version_Notes__c</columns>
+    <columns>Site__c</columns>
+    <columns>ASSET.PARENT</columns>
+    <filterScope>Mine</filterScope>
+    <label>Assets by Version Status</label>
+</ListView>
