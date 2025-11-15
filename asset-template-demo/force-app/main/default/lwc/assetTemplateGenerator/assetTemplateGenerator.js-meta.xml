@@ -11,18 +11,13 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
-            <property name="showDescription" type="Boolean" default="true" label="Show Description Field"/>
-            <property name="cardTitle" type="String" default="Generate Assets from Template" label="Card Title"/>
+            <property name="showDescription" type="Boolean" default="true" label="Show Description"/>
+            <property name="cardTitle" type="String" default="Asset Template Generator" label="Card Title"/>
         </targetConfig>
-        <targetConfig targets="lightning__AppPage">
-            <property name="showDescription" type="Boolean" default="true" label="Show Description Field"/>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage">
+            <property name="showDescription" type="Boolean" default="true" label="Show Description"/>
             <property name="defaultAssetType" type="String" label="Default Asset Type"/>
-            <property name="cardTitle" type="String" default="Generate Assets from Template" label="Card Title"/>
-        </targetConfig>
-        <targetConfig targets="lightning__HomePage">
-            <property name="showDescription" type="Boolean" default="true" label="Show Description Field"/>
-            <property name="defaultAssetType" type="String" label="Default Asset Type"/>
-            <property name="cardTitle" type="String" default="Generate Assets from Template" label="Card Title"/>
+            <property name="cardTitle" type="String" default="Asset Template Generator" label="Card Title"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
