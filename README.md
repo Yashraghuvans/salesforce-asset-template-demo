@@ -1,4 +1,5 @@
-# Asset Template Demo - Salesforce Project
+
+# Bulk Asset Template Generator
 
 A comprehensive Salesforce solution for managing asset templates and generating multiple assets from templates. This project includes custom objects, Lightning Web Components, Apex classes, flows, and more.
 
@@ -219,6 +220,3 @@ asset-template-demo/
 - [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
 - [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
 
-## Support
-
-For issues or questions, please create an issue in the repository or contact your Salesforce administrator.
