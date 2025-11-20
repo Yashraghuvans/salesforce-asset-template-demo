@@ -12,13 +12,13 @@
                 <lightning-record-view-form record-id={recordId} object-api-name="Asset">
                     <div class="slds-grid slds-gutters slds-m-bottom_medium">
                         <div class="slds-col slds-size_1-of-3">
-                            <lightning-output-field field-name="Name"></lightning-output-field>
+                            <lightning-output-field field-name={fields.name}></lightning-output-field>
                         </div>
                         <div class="slds-col slds-size_1-of-3">
-                            <lightning-output-field field-name="Version__c"></lightning-output-field>
+                            <lightning-output-field field-name={fields.version}></lightning-output-field>
                         </div>
                         <div class="slds-col slds-size_1-of-3">
-                            <lightning-output-field field-name="Version_Status__c"></lightning-output-field>
+                            <lightning-output-field field-name={fields.versionStatus}></lightning-output-field>
                         </div>
                     </div>
                 </lightning-record-view-form>
